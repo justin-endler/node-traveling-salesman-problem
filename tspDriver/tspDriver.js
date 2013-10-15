@@ -8,7 +8,7 @@ exports.shortestNearestNeighbor = function(cities) {
       pathData;
 
   // Copy cities into coords. Latitude, longtitude, id.
-  for (var i in cities) {
+  for (var i = 0; i < cities.length; i++) {
     coords.push([cities[i].latitude, cities[i].longtitude, cities[i].id]);
   }
   // For each city as origin, run nearest neighbor. Keep track of shortest route.
