@@ -6,7 +6,7 @@ var self = this;
  */
 exports.nearestNeighbor = function(pathData) {
   coordsCopy = [];
-  for (var i in pathData.coords) {
+  for (var i = 0; i < pathData.coords.length; i++) {
     // Removed cities.
     if (pathData.coords[i] === null) {
       coordsCopy[i] = null;
