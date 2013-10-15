@@ -1,0 +1,17 @@
+extends layout
+
+block content
+  h1= title
+  h2 How to use the cities resource:
+  ol
+    li Send a GET request to /cities for a reference list of available city IDs.
+    li POST to /cities with a JSON list of city IDs as strings.
+      ul
+        li Include "Content-Type: application/json" in the header.
+        li Example request body: ["4", "6", "10", "59"]
+    li The response will be a json list of cities in the order of the shortest route found.
+
+  p This algorithm runs the nearest neighbor algorithm once for every city,
+      allowing each city to serve once as the origin.
+      It returns the shortest route of these trials.
+      The route list should be read in order from route[0] to route[route.length - 1] to route[0].
