@@ -33,9 +33,10 @@ exports.list = function(req, res) {
  */
 exports.getChoices = function(req, res, next) {
   var indices = req.body,
+      indicesLength = indices.length,
       choices = [];
   // Populate choices array with city and state data.
-  for (var i in indices) {
+  for (var i = 0; i < indices.length; i++) {
     // Add id.
     req.cities[indices[i]].id = indices[i];
     choices.push(req.cities[indices[i]]);
@@ -43,6 +44,25 @@ exports.getChoices = function(req, res, next) {
   // Create data object to pass along city and state data.
   req.choices = choices;
 
+  next();
+};
+/**
+ * Remove duplicates from choices.
+ * http://stackoverflow.com/questions/1960473/unique-values-in-an-array
+ */
+exports.uniqueIds = function(req, res, next) {
+  var uniqueIds = [],
+      chosen = {};
+
+  for (var i = 0; i < req.body.length; i++) {
+    // Bypass duplicate.
+    if (chosen.hasOwnProperty(req.body[i])) {
+      continue;
+    }
+    uniqueIds.push(req.body[i]);
+    chosen[req.body[i]] = 1;
+  }
+  req.body = uniqueIds;
   next();
 };
 /**
@@ -107,4 +127,4 @@ exports.respond = function(req, res) {
 app.get('/cities', self.getCities, self.list);
 // Init TSP process.
 // @todo add validation
-app.post('/cities', self.getCities, self.getChoices, self.getLatitudeLongtitude, self.shortestNearestNeighbor, self.respond);
+app.post('/cities', self.uniqueIds, self.getCities, self.getChoices, self.getLatitudeLongtitude, self.shortestNearestNeighbor, self.respond);
