@@ -127,4 +127,4 @@ exports.respond = function(req, res) {
 app.get('/cities', self.getCities, self.list);
 // Init TSP process.
 // @todo add validation
-app.post('/cities', self.uniqueIds, self.getCities, self.getChoices, self.getLatitudeLongtitude, self.shortestNearestNeighbor, self.respond);
+app.post('/tour', self.uniqueIds, self.getCities, self.getChoices, self.getLatitudeLongtitude, self.shortestNearestNeighbor, self.respond);
