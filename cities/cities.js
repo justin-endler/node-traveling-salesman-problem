@@ -14,7 +14,7 @@ exports.getCities = function(req, res, next) {
   // Add cities to req object.
   req.cities = [];
   // Add IDs to resource output for ease of use.
-  for (var i in cities) {
+  for (var i = 0; i < cities.length; i++) {
     cities[i].id = i;
     req.cities[i] = cities[i];
   }
@@ -106,7 +106,7 @@ exports.respond = function(req, res) {
       },
       cityData;
   // Form route list in output.
-  for (var i in req.shortestTourPath) {
+  for (var i = 0; i < req.shortestTourPath.length; i++) {
     // Use city id in path to get city data.
     cityData = req.cities[req.shortestTourPath[i][2]];
     output.route[i] = {};
