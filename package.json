@@ -6,10 +6,12 @@
     "start": "node app.js"
   },
   "dependencies": {
-    "express": "4.13.1",
-    "jade": "1.11.0",
-    "async": "1.3.0",
-    "lodash": "3.10.0",
-    "request": "v2.58.1"
+    "express": "*",
+    "body-parser": "*",
+    "errorhandler": "*",
+    "jade": "*",
+    "async": "*",
+    "lodash": "*",
+    "request": "*"
   }
 }
