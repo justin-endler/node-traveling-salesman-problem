@@ -1,8 +1,11 @@
-Run:
-node app.js
+## Install
+`npm install`
 
-Instructions:
-//localhost:3000
+## Run
+`node app.js`
 
-@todo
+## Instructions
+`//localhost:3000`
+
+// @todo
 - add POST validation

@@ -1,16 +1,20 @@
 var self = this;
-/*
- * Modules.
- */
-var osmGeocoder = require('../node_modules/osmgeocoder'),
-    forEachAsync = require('../node_modules/forEachAsync'),
-    tspDriver = require('../tspDriver');
+var cwd = process.cwd();
+// @todo use package.json and npm install for modules
+// @todo lint all files
+// @todo use async and not forEachAsync
+// @todo update all files for style
+// @todo use res.stash for storing things instead of req.cities, etc
+// @todo remove open street map and just make the requests yoself
+var osmGeocoder = require('osmgeocoder');
+var forEachAsync = require('forEachAsync');
+var tspDriver = require(cwd + '/tspDriver');
 /**
  * Gets cities data from json and adds to req object.
  */
-exports.getCities = function(req, res, next) {
+exports.getCities = function (req, res, next) {
   // Get cities json.
-  var cities = require('./cities.json');
+  var cities = require(__dirname + '/cities.json');
   // Add cities to req object.
   req.cities = [];
   // Add IDs to resource output for ease of use.
@@ -24,7 +28,7 @@ exports.getCities = function(req, res, next) {
 /**
  * List cities.
  */
-exports.list = function(req, res) {
+exports.list = function (req, res) {
   // Respond.
   res.send(JSON.stringify(req.cities));
 };
@@ -32,9 +36,9 @@ exports.list = function(req, res) {
  * Get the posted choices list and add to the req object.
  */
 exports.getChoices = function(req, res, next) {
-  var indices = req.body,
-      indicesLength = indices.length,
-      choices = [];
+  var indices = req.body;
+  var indicesLength = indices.length;
+  var choices = [];
   // Populate choices array with city and state data.
   for (var i = 0; i < indices.length; i++) {
     // Add id.
@@ -50,7 +54,7 @@ exports.getChoices = function(req, res, next) {
  * Remove duplicates from choices.
  * http://stackoverflow.com/questions/1960473/unique-values-in-an-array
  */
-exports.uniqueIds = function(req, res, next) {
+exports.uniqueIds = function (req, res, next) {
   var uniqueIds = [],
       chosen = {};
 
@@ -69,11 +73,11 @@ exports.uniqueIds = function(req, res, next) {
  * Use Open Street Map to get latitude/longtitude of each city. Add to req.choices.
  */
 exports.getLatitudeLongtitude = function(req, res, next) {
-  var city = "";
-  forEachAsync.forEachAsync(req.choices, function(nextIteration, element, index, array) {
-    cityString = element.city + ", " + element.state;
+  var city = '';
+  forEachAsync.forEachAsync(req.choices, function (nextIteration, element, index, array) {
+    cityString = element.city + ', ' + element.state;
     // Use Open Street Map service to get latitude/longtitude.
-    osmGeocoder.geocode(cityString, function(err, geocodeRes) {
+    osmGeocoder.geocode(cityString, function (err, geocodeRes) {
       // @todo handle err
       if (typeof geocodeRes[0] !== 'undefined') {
         element.latitude = geocodeRes[0].lat;
